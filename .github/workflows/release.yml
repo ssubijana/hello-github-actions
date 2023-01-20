@@ -16,3 +16,10 @@ jobs:
           NEXT_RELEASE=$(grep 'version: ' properties.yml | sed 's/version: //' | xargs)
           echo "$NEXT_RELEASE"
           echo "NEXT_RELEASE=$NEXT_RELEASE" >> $GITHUB_ENV
+
+      - name: Create GitHub Release
+        uses: ncipollo/release-action@v1
+        with:
+          generateReleaseNotes: true
+          tag: ${{ env.NEXT_RELEASE }}
+          token: ${{ secrets.RELEASE_TOKEN }}
